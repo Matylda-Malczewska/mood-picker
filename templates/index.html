@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mood Picker</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Caveat:wght@400;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="bg-pattern"></div>
+
+    <main>
+        <header>
+            <div class="header-deco">
+                <div class="tape tape-pink"></div>
+                <div class="tape tape-mint"></div>
+            </div>
+            <h1 class="logo">
+                Mood Picker
+                <span class="logo-underline"></span>
+            </h1>
+            <p class="tagline">
+                <span class="star-deco">✦</span>
+                Twój nastrój, Twoja muzyka, Twój film.
+                <span class="star-deco">✦</span>
+            </p>
+        </header>
+
+        <section class="input-section">
+            <div class="notebook">
+                <div class="notebook-rings">
+                    <span></span><span></span><span></span><span></span><span></span>
+                </div>
+                <div class="notebook-inner">
+                    <p class="notebook-label">jak się dziś czujesz?</p>
+                    <textarea id="moodInput" placeholder="napisz tutaj..." rows="3"></textarea>
+                    <button id="analyzeBtn" onclick="analyze()">znajdź dla mnie ✦</button>
+                </div>
+            </div>
+        </section>
+
+        <div id="loader" class="loader hidden">
+            <div class="spinner"></div>
+            <p>szukam czegoś dla Ciebie...</p>
+        </div>
+
+        <div id="error" class="error hidden"></div>
+
+        <section id="results" class="results hidden">
+            <div class="mood-badge" id="moodBadge"></div>
+            <div class="cards">
+                <div class="card card-spotify" id="spotifyCard">
+                    <div class="card-tape card-tape-green"></div>
+                    <div class="card-label">Playlista na Spotify</div>
+                    <div id="spotifyContent"></div>
+                </div>
+                <div class="card card-youtube" id="youtubeCard">
+                    <div class="card-tape"></div>
+                    <div class="card-label">Film na YouTube</div>
+                    <div id="youtubeContent"></div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script src="/static/script.js"></script>
+</body>
+</html>
