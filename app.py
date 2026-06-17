@@ -32,22 +32,30 @@ def analyze():
     mood_text = data.get("mood", "").strip()
 
     if not mood_text:
-        return jsonify({"error": "Opisz swój nastrój!"}), 400
+        return jsonify({"error": "Please describe your mood!"}), 400
 
     try:
-        prompt = f"""Użytkownik opisał swój nastrój: "{mood_text}"
+        prompt = f"""The user described their mood: "{mood_text}"
 
-Przeanalizuj nastrój i zwróć TYLKO obiekt JSON (bez żadnego dodatkowego tekstu, bez znaczników markdown) w tym formacie:
+Analyze the mood carefully and return ONLY a JSON object (no extra text, no markdown) in this format:
 {{
-    "mood_summary": "krótki opis nastroju po polsku (1 zdanie)",
-    "spotify_query": "zapytanie po angielsku do wyszukania playlisty na Spotify (np. 'chill sad indie playlist')",
-    "youtube_query": "zapytanie po angielsku do wyszukania filmu na YouTube (np. 'relaxing drama movie')",
-    "mood_emoji": "1-2 emoji pasujące do nastroju",
-    "color": "kolor hex pasujący do nastroju (np. #8B5CF6)"
-}}"""
+    "mood_summary": "short mood description in English (1 sentence)",
+    "spotify_query": "detailed Spotify search query in English including genre, tempo, emotions (e.g. 'slow sad acoustic indie songs for rainy day')",
+    "youtube_query": "detailed YouTube search query in English with genre and mood (e.g. 'cozy romantic comedy movie')",
+    "mood_emoji": "1-2 matching emojis",
+    "color": "hex color matching the mood (e.g. #8B5CF6)"
+}}
+
+Guidelines:
+- If sad: slow melancholic music, drama or emotional film
+- If happy: energetic pop music, comedy or adventure film
+- If relaxed: lo-fi or ambient music, calm film or documentary
+- If tired: gentle music, light easy film
+- If excited: upbeat music, action or thriller film
+- Match music and film EXACTLY to the described mood"""
 
         response = groq_client.chat.completions.create(
-         model="llama-3.3-70b-versatile",
+            model="llama-3.3-70b-versatile",
             messages=[{"role": "user", "content": prompt}]
         )
         response_text = response.choices[0].message.content.strip()
@@ -55,11 +63,11 @@ Przeanalizuj nastrój i zwróć TYLKO obiekt JSON (bez żadnego dodatkowego teks
         mood_data = json.loads(response_text)
 
     except Exception as e:
-        return jsonify({"error": f"Błąd analizy nastroju: {str(e)}"}), 500
+        return jsonify({"error": f"Mood analysis error: {str(e)}"}), 500
 
     spotify_result = None
     try:
-        print("Szukam na Spotify:", mood_data["spotify_query"])
+        print("Searching Spotify:", mood_data["spotify_query"])
         results = spotify_client.search(
             q=mood_data["spotify_query"],
             type="playlist",
@@ -78,7 +86,7 @@ Przeanalizuj nastrój i zwróć TYLKO obiekt JSON (bez żadnego dodatkowego teks
                 "tracks": p.get("tracks", {}).get("total", 0) if p.get("tracks") else 0
             }
     except Exception as e:
-        print("Błąd Spotify:", str(e))
+        print("Spotify error:", str(e))
         spotify_result = {"error": str(e)}
 
     youtube_result = None

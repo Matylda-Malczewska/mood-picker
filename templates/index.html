@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pl">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -23,7 +23,7 @@
             </h1>
             <p class="tagline">
                 <span class="star-deco">✦</span>
-                Twój nastrój, Twoja muzyka, Twój film.
+                Your mood, your music, your film.
                 <span class="star-deco">✦</span>
             </p>
         </header>
@@ -34,16 +34,16 @@
                     <span></span><span></span><span></span><span></span><span></span>
                 </div>
                 <div class="notebook-inner">
-                    <p class="notebook-label">jak się dziś czujesz?</p>
-                    <textarea id="moodInput" placeholder="napisz tutaj..." rows="3"></textarea>
-                    <button id="analyzeBtn" onclick="analyze()">znajdź dla mnie ✦</button>
+                    <p class="notebook-label">how are you feeling today?</p>
+                    <textarea id="moodInput" placeholder="write here..." rows="3"></textarea>
+                    <button id="analyzeBtn" onclick="analyze()">find something for me ✦</button>
                 </div>
             </div>
         </section>
 
         <div id="loader" class="loader hidden">
             <div class="spinner"></div>
-            <p>szukam czegoś dla Ciebie...</p>
+            <p>analyzing your mood...</p>
         </div>
 
         <div id="error" class="error hidden"></div>
@@ -53,12 +53,12 @@
             <div class="cards">
                 <div class="card card-spotify" id="spotifyCard">
                     <div class="card-tape card-tape-green"></div>
-                    <div class="card-label">Playlista na Spotify</div>
+                    <div class="card-label">Playlist on Spotify</div>
                     <div id="spotifyContent"></div>
                 </div>
                 <div class="card card-youtube" id="youtubeCard">
                     <div class="card-tape"></div>
-                    <div class="card-label">Film na YouTube</div>
+                    <div class="card-label">Film on YouTube</div>
                     <div id="youtubeContent"></div>
                 </div>
             </div>
