@@ -3,7 +3,7 @@ async function analyze() {
     const mood = input.value.trim();
 
     if (!mood) {
-        showError("Opisz najpierw swój nastrój!");
+        showError("Please describe your mood first!");
         return;
     }
 
@@ -22,14 +22,14 @@ async function analyze() {
         const data = await response.json();
 
         if (!response.ok) {
-            showError(data.error || "Coś poszło nie tak.");
+            showError(data.error || "Something went wrong.");
             return;
         }
 
         showResults(data);
 
     } catch (err) {
-        showError("Błąd połączenia z serwerem.");
+        showError("Connection error. Please try again.");
     } finally {
         document.getElementById("loader").classList.add("hidden");
         btn.disabled = false;
@@ -48,11 +48,11 @@ function showResults(data) {
         spotifyEl.innerHTML = `
             ${spotify.image ? `<img class="playlist-img" src="${spotify.image}" alt="${spotify.name}">` : ""}
             <div class="playlist-name">${spotify.name}</div>
-            <div class="playlist-meta">przez ${spotify.owner} · ${spotify.tracks} utworów</div>
-            <a class="open-btn spotify-btn" href="${spotify.url}" target="_blank">Otwórz w Spotify</a>
+            <div class="playlist-meta">by ${spotify.owner} · ${spotify.tracks} tracks</div>
+            <a class="open-btn spotify-btn" href="${spotify.url}" target="_blank">Open in Spotify</a>
         `;
     } else {
-        spotifyEl.innerHTML = `<p style="color:var(--muted)">Nie znaleziono playlisty.</p>`;
+        spotifyEl.innerHTML = `<p style="color:var(--muted)">No playlist found.</p>`;
     }
 
     // YouTube
@@ -64,10 +64,10 @@ function showResults(data) {
             </a>
             <div class="video-title">${youtube.title}</div>
             <div class="video-channel">${youtube.channel}</div>
-            <a class="open-btn youtube-btn" href="${youtube.url}" target="_blank">Oglądaj na YouTube</a>
+            <a class="open-btn youtube-btn" href="${youtube.url}" target="_blank">Watch on YouTube</a>
         `;
     } else {
-        youtubeEl.innerHTML = `<p style="color:var(--muted)">Nie znaleziono filmu.</p>`;
+        youtubeEl.innerHTML = `<p style="color:var(--muted)">No video found.</p>`;
     }
 
     document.getElementById("results").classList.remove("hidden");
